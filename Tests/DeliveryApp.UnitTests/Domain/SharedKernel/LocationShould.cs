@@ -101,7 +101,7 @@ namespace DeliveryApp.UnitTests.Domain.SharedKernel
         }
 
         [Fact]
-        public void ShouldBeRandomCreated()
+        public void BeRandomCreated()
         {
             //Arrange
             var location = Location.CreateRandom();
