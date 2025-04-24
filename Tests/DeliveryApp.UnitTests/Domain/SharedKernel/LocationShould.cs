@@ -11,7 +11,7 @@ namespace DeliveryApp.UnitTests.Domain.SharedKernel
         public static IEnumerable<object[]> LocationMatrix =>
             from x in Enumerable.Range(Location.Min, Location.Max)
             from y in Enumerable.Range(Location.Min, Location.Max)
-            select new object[] { (byte)x, (byte)y };
+            select new object[] { x, y };
 
         public static IEnumerable<object[]> DistanceToTestData()
         {
@@ -25,7 +25,7 @@ namespace DeliveryApp.UnitTests.Domain.SharedKernel
 
         [Theory]
         [MemberData(nameof(LocationMatrix))]
-        public void BeCorrectWhenParamsIsCorrectOnCreated(byte x, byte y)
+        public void BeCorrectWhenParamsIsCorrectOnCreated(int x, int y)
         {
             //Arrange
 
@@ -45,7 +45,7 @@ namespace DeliveryApp.UnitTests.Domain.SharedKernel
         [InlineData(1, 11)]
         [InlineData(11, 1)]
         [InlineData(11, 11)]
-        public void ReturnErrorWhenParamsIsIncorrectOnCreated(byte x, byte y)
+        public void ReturnErrorWhenParamsIsIncorrectOnCreated(int x, int y)
         {
             //Arrange
 
@@ -59,7 +59,7 @@ namespace DeliveryApp.UnitTests.Domain.SharedKernel
 
         [Theory]
         [MemberData(nameof(DistanceToTestData))]
-        public void BeReturnDistance(Location location1, Location location2, byte expected)
+        public void BeReturnDistance(Location location1, Location location2, int expected)
         {
             //Arrange
 
