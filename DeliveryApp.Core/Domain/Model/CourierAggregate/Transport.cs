@@ -35,33 +35,33 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return GeneralErrors.ValueIsRequired(nameof(name));
+                return Errors.TransportNameIsRequired();
             }
 
             if (speed == null)
             {
-                return GeneralErrors.ValueIsRequired(nameof(speed));
+                return Errors.SpeedIsRequired();
             }
 
             return new Transport(name, speed);
         }
 
-        public Result<object, Error> SetName(string name)
+        public Result<Transport, Error> SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                return GeneralErrors.ValueIsRequired(nameof(name));
+                return Errors.TransportNameIsRequired();
             }
 
             Name = name;
             return this;
         }
 
-        public Result<object, Error> SetSpeed(Speed speed)
+        public Result<Transport, Error> SetSpeed(Speed speed)
         {
             if (speed == null)
             {
-                return GeneralErrors.ValueIsRequired(nameof(speed));
+                return Errors.SpeedIsRequired();
             }
 
             Speed = speed;
@@ -94,6 +94,20 @@ namespace DeliveryApp.Core.Domain.Model.CourierAggregate
             var newY = from.Y + deltaY;
 
             return Location.Create(newX, newY).Value;
+        }
+
+
+        public static class Errors
+        {
+            public static Error TransportNameIsRequired()
+            {
+                return new Error($"{nameof(Transport).ToLowerInvariant()}.name.is.required", "Transport name is required");
+            }
+
+            public static Error SpeedIsRequired()
+            {
+                return new Error($"{nameof(SharedKernel.Speed).ToLowerInvariant()}.is.required", "Speed is required");
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
         {
             if (value is < Min or > Max)
             {
-                return GeneralErrors.ValueIsInvalid(nameof(value));
+                return Errors.SpeedValueIsInvalid();
             }
             return new Speed(value);
         }
@@ -37,6 +37,14 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
         protected override IEnumerable<IComparable> GetEqualityComponents()
         {
             yield return Value;
+        }
+
+        public static class Errors
+        {
+            public static Error SpeedValueIsInvalid()
+            {
+                return new Error($"{nameof(Speed).ToLowerInvariant()}.value.is.invalid", $"Speed must be between {Min} and {Max}.");
+            }
         }
     }
 }

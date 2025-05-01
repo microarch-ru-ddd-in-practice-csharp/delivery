@@ -43,12 +43,12 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
         {
             if (x is < Min or > Max)
             {
-                return GeneralErrors.ValueIsInvalid(nameof(x));
+                return Errors.LocationValueXIsInvalid();
             }
 
             if (y is < Min or > Max)
             {
-                return GeneralErrors.ValueIsInvalid(nameof(y));
+                return Errors.LocationValueYIsInvalid();
             }
 
             return new Location(x, y);
@@ -72,7 +72,7 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
         {
             var xDistance = Math.Abs(location.X - X);
             var yDistance = Math.Abs(location.Y - Y);
-            return (xDistance + yDistance);
+            return xDistance + yDistance;
         }
 
         /// <summary>
@@ -86,6 +86,19 @@ namespace DeliveryApp.Core.Domain.Model.SharedKernel
         {
             yield return X;
             yield return Y;
+        }
+
+        public static class Errors
+        {
+            public static Error LocationValueXIsInvalid()
+            {
+                return new Error($"{nameof(Location).ToLowerInvariant()}.value.x.is.invalid", $"Location value X should be between {Min} and {Max} values");
+            }
+
+            public static Error LocationValueYIsInvalid()
+            {
+                return new Error($"{nameof(Location).ToLowerInvariant()}.value.y.is.invalid", $"Location value Y should be between {Min} and {Max} values");
+            }
         }
     }
 }
