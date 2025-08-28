@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeliveryApp.UnitTests", "Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Primitives", "Utils\Primitives\Primitives.csproj", "{186D8CEE-6BD6-4E46-B6CA-B02DAE5FA551}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,13 +61,13 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {3378DFF0-674B-41F3-9274-65B279512CF4}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E76362C1-D73C-42E1-A18E-305F6CF5FB0A} = {4C5B5C4D-2D74-4E50-BF8B-B7CE89DDB345}
 		{DD63C093-8B87-45A9-893E-D883165419C2} = {4C5B5C4D-2D74-4E50-BF8B-B7CE89DDB345}
 		{5387E8D2-C397-4068-9559-6CEBF1943936} = {4C5B5C4D-2D74-4E50-BF8B-B7CE89DDB345}
 		{186D8CEE-6BD6-4E46-B6CA-B02DAE5FA551} = {B6FB4FD8-D312-4BC7-8C4B-29AD303A4CE0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3378DFF0-674B-41F3-9274-65B279512CF4}
 	EndGlobalSection
 EndGlobal
