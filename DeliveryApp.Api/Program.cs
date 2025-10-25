@@ -1,9 +1,16 @@
 using DeliveryApp.Api;
+using DeliveryApp.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration["CONNECTION_STRING"];
 
 // Health Checks
 builder.Services.AddHealthChecks();
+builder.Services.AddCourierDistributorService();
+builder.Services.AddCourierRepository();
+builder.Services.AddOrderRepository();
+builder.Services.AddUnitOfWork();
+builder.Services.AddDatabaseContext(connectionString);
 
 // Cors
 builder.Services.AddCors(options =>
@@ -17,8 +24,6 @@ builder.Services.AddCors(options =>
 
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();
-var connectionString = builder.Configuration["CONNECTION_STRING"];
-
 var app = builder.Build();
 
 // -----------------------------------
