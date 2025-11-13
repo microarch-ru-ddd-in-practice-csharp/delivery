@@ -1,0 +1,51 @@
+using System.Diagnostics.CodeAnalysis;
+using CSharpFunctionalExtensions;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
+using DeliveryApp.Core.Domain.Model.OrderAggregate;
+using Primitives;
+using Primitives.Extensions;
+
+namespace DeliveryApp.Core.Domain.Services;
+
+public sealed class DispatchService : IDispatchService
+{
+    public Result<Courier, Error> Dispatch(Order order, IList<Courier> couriers)
+    {
+        if (order is null) return GeneralErrors.ValueIsRequired(nameof(order));
+        if (order.Status != OrderStatus.Created) return Errors.OnlyOrderWithStatusCreatedCanBeDispatched(order);
+        
+        if (couriers is null) return GeneralErrors.ValueIsRequired(nameof(couriers));
+        if (couriers.Count is 0) return GeneralErrors.CollectionIsTooSmall(1, 0);
+        
+        var mostSuitableCourier = couriers
+            .Where(courier => courier.CanTakeOrder(order).Value)
+            .MinBy(courier => courier.GetRemainingMovesCount(order.Location).Value);
+
+        if (mostSuitableCourier is null) return Errors.SuitableCourierNotFound(order);
+        
+        order.Assign(mostSuitableCourier).ThrowIfFailure();
+        mostSuitableCourier.TakeOrder(order).ThrowIfFailure();
+        
+        return mostSuitableCourier;
+    }
+
+    [ExcludeFromCodeCoverage]
+    public static class Errors
+    {
+        public static Error OnlyOrderWithStatusCreatedCanBeDispatched(Order order)
+        {
+            return new Error(
+                "only.order.with.status.created.can.be.dispatched",
+                $"Order (id: {order?.Id}, status: {order?.Status?.Name}) cannot be dispatched, only order with status \"Created\" can be"
+                );
+        }
+
+        public static Error SuitableCourierNotFound(Order order)
+        {
+            return new Error(
+                "suitable.courier.not.found",
+                $"Suitable courier for order (id: {order?.Id}, volume: {order?.Volume}) not found"
+                );
+        }
+    }
+}
