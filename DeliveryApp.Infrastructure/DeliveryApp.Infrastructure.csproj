@@ -16,6 +16,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="JsonNet.ContractResolvers" Version="2.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
             <PrivateAssets>all</PrivateAssets>
@@ -34,9 +35,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="Adapters\Grpc\GeoService\grpc.proto"/>
         <None Remove="Adapters\Kafka\BasketConfirmed\Contract.proto"/>
         <None Remove="Adapters\Grpc\GeoService\Contract.proto"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Adapters\Grpc\GeoService\grpc.proto" />
+      <Protobuf Include="Adapters\Grpc\GeoService\grpc.proto" />
+      <None Remove="Adapters\Kafka\Order\Contract.proto" />
+      <Protobuf Include="Adapters\Kafka\Order\Contract.proto" />
     </ItemGroup>
 
 </Project>
