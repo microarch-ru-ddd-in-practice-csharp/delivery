@@ -1,9 +1,9 @@
-using DeliveryApp.Infrastructure;
 using Microsoft.Extensions.Options;
+using DeliveryApp.Infrastructure;
 
 namespace DeliveryApp.Api;
 
-public class SettingsSetup : IConfigureOptions<Settings>
+public sealed class SettingsSetup : IConfigureOptions<Settings>
 {
     private readonly IConfiguration _configuration;
 

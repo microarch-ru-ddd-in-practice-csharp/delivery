@@ -1,9 +1,32 @@
+using Grpc.Net.Client.Configuration;
+using DeliveryApp.Api.Extensions;
 using DeliveryApp.Api;
+using Clients.Geo;
+using Grpc.Core;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration["CONNECTION_STRING"];
+var geoServiceGrpcHost = builder.Configuration["GEO_SERVICE_GRPC_HOST"];
 
 // Health Checks
 builder.Services.AddHealthChecks();
+builder.Services.AddCourierDistributorService();
+builder.Services.AddCourierRepository();
+builder.Services.AddOrderRepository();
+builder.Services.AddUnitOfWork();
+builder.Services.AddAllActiveOrdersQuery(connectionString);
+builder.Services.AddAllBusyCouriersModelProvider(connectionString);
+builder.Services.AddDatabaseContext(connectionString);
+builder.Services.AddMediator();
+builder.Services.AddGetAllNotComplitedOrdersQuery();
+builder.Services.AddGetAllBusyCouriersQuery();
+builder.Services.AddMoveCourierCommand();
+builder.Services.AddAssignOrderCommand();
+builder.Services.AddCreateOrderCommand();
+builder.Services.AddCronJobs();
+builder.Services.AddHttpHandlers();
+builder.Services.AddSwagger();
+builder.Services.AddGrpcClient();
 
 // Cors
 builder.Services.AddCors(options =>
@@ -17,7 +40,40 @@ builder.Services.AddCors(options =>
 
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();
-var connectionString = builder.Configuration["CONNECTION_STRING"];
+
+builder.Services
+    .AddGrpcClient<Geo.GeoClient>(o =>
+    {
+        o.Address = new Uri(geoServiceGrpcHost!);
+    })
+    .ConfigureChannel(o =>
+    {
+        o.HttpHandler = new SocketsHttpHandler
+        {
+            PooledConnectionIdleTimeout = Timeout.InfiniteTimeSpan,
+            KeepAlivePingDelay = TimeSpan.FromSeconds(60),
+            KeepAlivePingTimeout = TimeSpan.FromSeconds(30),
+            EnableMultipleHttp2Connections = true
+        };
+        o.ServiceConfig = new ServiceConfig
+        {
+            MethodConfigs =
+            {
+                new MethodConfig
+                {
+                    Names = { MethodName.Default },
+                    RetryPolicy = new RetryPolicy
+                    {
+                        MaxAttempts = 5,
+                        InitialBackoff = TimeSpan.FromSeconds(1),
+                        MaxBackoff = TimeSpan.FromSeconds(5),
+                        BackoffMultiplier = 1.5,
+                        RetryableStatusCodes = { StatusCode.Unavailable }
+                    }
+                }
+            }
+        };
+    });
 
 var app = builder.Build();
 
@@ -37,5 +93,19 @@ app.UseRouting();
 //     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 //     db.Database.Migrate();
 // }
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.UseSwagger(c => { c.RouteTemplate = "openapi/{documentName}/openapi.json"; })
+    .UseSwaggerUI(options =>
+    {
+        options.RoutePrefix = "openapi";
+        options.SwaggerEndpoint("/openapi/1.0.0/openapi.json", "Swagger Delivery Service");
+        options.RoutePrefix = string.Empty;
+        options.SwaggerEndpoint("/openapi-original.json", "Swagger Delivery Service");
+    });
+
+app.UseCors();
+app.UseEndpoints(endpoints => { _ = endpoints.MapControllers(); });
 
 app.Run();
