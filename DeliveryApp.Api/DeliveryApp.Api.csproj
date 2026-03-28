@@ -19,7 +19,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="MediatR" Version="14.1.0" />
-        <PackageReference Include="MediatR.Contracts" Version="2.0.1"/>
+        <PackageReference Include="MediatR.Contracts" Version="2.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
             <PrivateAssets>all</PrivateAssets>
@@ -41,15 +41,10 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\DeliveryApp.Core\DeliveryApp.Core.csproj"/>
-        <ProjectReference Include="..\DeliveryApp.Infrastructure\DeliveryApp.Infrastructure.csproj"/>
+        <ProjectReference Include="..\DeliveryApp.Core\DeliveryApp.Core.csproj" />
+        <ProjectReference Include="..\DeliveryApp.Infrastructure\DeliveryApp.Infrastructure.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <None Remove="Adapters\Kafka\BasketConfirmed\Contract.proto"/>
-    </ItemGroup>
-    <ItemGroup>
-        <_ContentIncludedByDefault Remove="Adapters\Http\Contract\src\DeliveryApp.Api.Adapters.Http.Contract.src.OpenApi\appsettings.json"/>
-        <_ContentIncludedByDefault Remove="Adapters\Http\Contract\src\DeliveryApp.Api.Adapters.Http.Contract.src.OpenApi\Properties\launchSettings.json"/>
-        <_ContentIncludedByDefault Remove="Adapters\Http\Contract\src\DeliveryApp.Api.Adapters.Http.Contract.src.OpenApi\wwwroot\openapi-original.json"/>
+      <Folder Include="Adapters\Kafka\" />
     </ItemGroup>
 </Project>
