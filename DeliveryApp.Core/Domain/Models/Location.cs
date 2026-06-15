@@ -5,6 +5,9 @@ namespace DeliveryApp.Core.Domain.Models
 {
     public class Location : ValueObject
     {
+        private const int MinCoordinate = 1;
+        private const int MaxCoordinate = 10;
+        
         public int X { get; }
         public int Y { get; }
 
@@ -18,28 +21,18 @@ namespace DeliveryApp.Core.Domain.Models
 
         public static Result<Location, Error> Create(int x, int y)
         {
-            if (x is < 1 or > 10 )
-                return GeneralErrors.ValueMustBeBetween<int>("x",  x, 1, 10 );
-            if (y is < 1 or > 10 )
-                return GeneralErrors.ValueMustBeBetween<int>("y", y, 1, 10 );
+            if (x is < MinCoordinate or > MaxCoordinate)
+                return GeneralErrors.ValueMustBeBetween<int>("x",  x, MinCoordinate, MaxCoordinate);
+            if (y is < MinCoordinate or > MaxCoordinate)
+                return GeneralErrors.ValueMustBeBetween<int>("y", y, MinCoordinate, MaxCoordinate);
             return new Location(x, y);
         }
 
-        public static Location CreateRandom()
-        {
-            var randX = Random.Shared.Next(1, 11);
-            var randY = Random.Shared.Next(1, 11);
-            var randomLoc = new Location(randX, randY);
-            return randomLoc;
-        }
-        
         public Result<int, Error> DistanceTo(Location target)
         {
             if (target == null)
                 return GeneralErrors.ValueIsRequired(nameof(target));
-            var myX = X;
-            var myY = Y;
-            var distance = Math.Abs(target.X - myX) + Math.Abs(target.Y - myY);
+            var distance = Math.Abs(target.X - X) + Math.Abs(target.Y - Y);
             return distance;
         }
         

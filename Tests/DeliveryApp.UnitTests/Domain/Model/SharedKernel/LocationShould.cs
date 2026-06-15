@@ -49,18 +49,7 @@ public class LocationShould
         
         result.Should().BeFalse();
     }
-    
-    [Fact]
-    public void CreateRandomAlwaysReturnsValidLocation()
-    {
-        for (int i = 0; i < 100; i++)
-        {
-            var location = Location.CreateRandom();
-            location.X.Should().BeInRange(1, 10);
-            location.Y.Should().BeInRange(1, 10);
-        }
-    }
-    
+
     [Fact]
     public void DistanceToReturnsValidDistance()
     {
