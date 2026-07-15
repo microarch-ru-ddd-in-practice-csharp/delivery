@@ -55,6 +55,18 @@ public class Location : ValueObject
     #region Functionen
 
     /// <summary>
+    /// Проверяет, что текущая локация совпадает с целевой локацией
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+
+    public bool IsSameLocation(Location target)
+
+    {
+        return this.Distance(target) == 0;
+    }
+
+    /// <summary>
     /// Создает случайную локацию в пределах 10х10
     /// </summary>
     /// <returns></returns>

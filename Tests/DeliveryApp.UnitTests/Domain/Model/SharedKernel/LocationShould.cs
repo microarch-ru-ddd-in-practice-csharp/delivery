@@ -71,4 +71,28 @@ public class LocationShould
         Assert.InRange(randomLocation.X, 1, 10);
         Assert.InRange(randomLocation.Y, 1, 10);
     }
+
+    [Fact]
+    public void BeNearIfDistanceIsSameLocation()
+    {
+        // Arrange
+        var location1 = new Location(3, 3);
+        var location2 = new Location(3, 3);
+        // Act
+        bool isNear = location1.IsSameLocation(location2);
+        // Assert
+        Assert.True(isNear);
+    }
+
+    [Fact]
+    public void NotBeSameLocationIfDistanceIsGreaterThanOne()
+    {
+        // Arrange
+        var location1 = new Location(1, 3);
+        var location2 = new Location(3, 3);
+        // Act
+        bool isNear = location1.IsSameLocation(location2);
+        // Assert
+        Assert.False(isNear);
+    }
 }
