@@ -79,6 +79,7 @@ public class AssignmentShould
         var courier = new Courier(new Location(5, 5));
         var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
         // Act && Assert
+        
         Assert.Throws<AssignmentCourierNotSameLocationException>(() => assignment.Complete(courier));
     }
 
@@ -90,9 +91,11 @@ public class AssignmentShould
         var status = AssignmentStatus.Assigned;
         var volume = new Volume(1);
         var location = new Location(1, 5);
-        var courier = new Courier(new Location(5, 5));
-        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Completed);
-        // Act && Assert
+        var courier = new Courier(new Location(1, 5));
+        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        // Act 
+        assignment.Complete(courier);
+        // Assert
         Assert.Throws<AssignmentAlreadyCompletedException>(() => assignment.Complete(courier));
     }
 }

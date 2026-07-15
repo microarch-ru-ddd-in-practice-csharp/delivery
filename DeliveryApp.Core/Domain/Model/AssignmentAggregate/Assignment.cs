@@ -59,6 +59,7 @@ public class Assignment : Entity<Guid>
     public Assignment(Guid orderId, Volume volume, Location location, AssignmentStatus status) : this()
     {
         if (orderId == Guid.Empty) throw new ArgumentException("Идентификатор заказа не может быть пустым", nameof(orderId));
+        if (status == AssignmentStatus.Completed) throw new ArgumentException("Статус не може быть ,завершенным,");
         this.Id = Guid.NewGuid();
         this.OrderId = orderId;
         this.Volume = volume ?? throw new ArgumentNullException(nameof(volume), "Обьем заказа не может быть пустым");
