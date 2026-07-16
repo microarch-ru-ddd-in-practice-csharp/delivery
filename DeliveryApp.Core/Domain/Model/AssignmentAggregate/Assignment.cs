@@ -39,12 +39,13 @@ public class Assignment : Entity<Guid>
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="courierLocation"></param>
+    /// <param name="location"></param>
     /// <exception cref="InvalidOperationException"></exception>
-    public void Complete(Courier courier)
+    public void Complete(Location location)
     {
         if (Status == AssignmentStatus.Completed)  throw new AssignmentAlreadyCompletedException();
-        if (!courier.Location.IsSameLocation(Location)) throw new AssignmentCourierNotSameLocationException();
+        if (location == null) throw new ArgumentNullException("Локация");
+        if (!location.IsSameLocation(Location)) throw new AssignmentCourierNotSameLocationException();
 
         this.Status = AssignmentStatus.Completed;
     }
