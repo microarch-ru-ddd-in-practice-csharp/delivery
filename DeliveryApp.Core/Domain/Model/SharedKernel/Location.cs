@@ -47,7 +47,8 @@ public class Location : ValueObject
     /// <returns></returns>
     public int Distance (Location target)
     {
-        return Math.Abs(this.X - target.X) + Math.Abs(this.Y - target.Y);
+        var res = Math.Abs(this.X - target.X) + Math.Abs(this.Y - target.Y);
+        return res;
     }
 
     #endregion
@@ -65,6 +66,8 @@ public class Location : ValueObject
     {
         return this.Distance(target) == 0;
     }
+
+    
 
     /// <summary>
     /// Создает случайную локацию в пределах 10х10

@@ -1,10 +1,6 @@
 ﻿using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
-using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using static DeliveryApp.Core.Domain.Model.AssignmentAggregate.Assignment;
 
