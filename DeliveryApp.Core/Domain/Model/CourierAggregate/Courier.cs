@@ -22,21 +22,7 @@ public class Courier : Aggregate<Guid>
     /// Локация курьера
     /// </summary>
     public Location Location { get; private set; }
-    //{ 
-    //    get => _location;
-    //    set
-    //    {
-    //        if (value == null) throw new ArgumentNullException(nameof(value)    , @"Локация курьера не может быть пустой");
-    //        // Проверка на допустимое расстояние между текущей локацией и новой локацией
-    //        if (_location != null && _location.Distance(value) > 1)
-    //        {
-    //            throw new CourierInvalideLocationException(_location, value);
-    //        }
-
-    //        _location = value;
-    //    }
-    //}
-
+    
     /// <summary>
     /// Максимальный объем заданий курьера
     /// </summary>
