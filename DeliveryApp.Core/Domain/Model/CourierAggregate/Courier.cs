@@ -1,8 +1,9 @@
 ﻿#nullable disable
 
 using Ddd;
-using DeliveryApp.Core.Domain.Model.SharedKernel;
 using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
+using DeliveryApp.Core.Domain.Model.OrderAggegate;
+using DeliveryApp.Core.Domain.Model.SharedKernel;
 
 namespace DeliveryApp.Core.Domain.Model.CounterAggegate;
 
@@ -59,12 +60,40 @@ public class Courier : Aggregate<Guid>
 
     #region Function
 
-    public void AddAssignment(Assignment assignment)
+    /// <summary>
+    /// Проверяет имеется ли Assignment с OrderId
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
+    public bool ContainsOrderId (Guid orderId)
     {
-        if (assignment is null) throw new ArgumentNullException(nameof(assignment), "Задание не может быть пустым");
-        if (!CanAddAssignment(assignment.Volume)) throw new CourierMaxVolumeExceededException();
-        assignment.CreateId(); 
-        _assignments.Add(assignment);
+        return Assignments.Any(x => x.OrderId == orderId);
+    }
+
+    /// <summary>
+    /// Добавлет новый заказ, все параметры
+    /// </summary>
+    /// <param name="orderId"></param>
+    /// <param name="volume"></param>
+    /// <param name="location"></param>
+    /// <exception cref="CourierMaxVolumeExceededException"></exception>
+    public void AddAssignment(Guid orderId, Volume volume, Location location)
+    {
+        var newAssignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        if (!CanAddAssignment(newAssignment.Volume)) throw new CourierMaxVolumeExceededException();
+        newAssignment.CreateId();
+        _assignments.Add(newAssignment);
+    }
+
+    /// <summary>
+    /// Добавлет новый заказ, параметер сам заказ
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    public void AddAssignment(Order order)
+    {
+        if (order is null) throw new ArgumentNullException(nameof(order), "Заказ не может быть пустой");
+        AddAssignment(order.Id, order.Volume, order.Location);
     }
 
     public void MoveTo(Location newlocation)
@@ -87,10 +116,17 @@ public class Courier : Aggregate<Guid>
 
     private Courier()
     { }
-    public void CompliteAssigment (Assignment assignment, Location location)
+
+    /// <summary>
+    /// Завершает заказ с локацией Курьера
+    /// </summary>
+    /// <param name="assignment"></param>
+    /// <exception cref="ArgumentException"></exception>
+    public void CompliteAssigment (Guid orderid)
     {
-        if (!_assignments.Contains(assignment)) throw new ArgumentException("Задание не найдено", nameof(assignment));
-        assignment.Complete(location);
+        var assignment = Assignments.FirstOrDefault(x => x.OrderId == orderid);
+        if (assignment == null) throw new ArgumentException("Задание не найдено");
+        assignment.Complete(this.Location);
     }
 
     #endregion

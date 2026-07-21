@@ -53,12 +53,11 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             // Arrange
             var location = new Location(1, 5);
             var courier = new Courier("Иван Ивановмч", location);
-            var assignment = new Assignment(Order1);
+            
             // Act
-            courier.AddAssignment(assignment);
+            courier.AddAssignment(Order1.Id, Order1.Volume, Order1.Location);
             // Assert
-            Assert.Contains(assignment, courier.Assignments);
-            Assert.Equal(assignment.OrderId, Order1.Id);
+            Assert.True(courier.ContainsOrderId(Order1.Id));
         }
 
         [Fact]
@@ -68,29 +67,27 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             var location = new Location(1, 5);
             var courier = new Courier("Иван Ивановмч", location);
 
-            var assignment1 = new Assignment(Order1);
-            var assignment2 = new Assignment(Order2);
             // Act
-            courier.AddAssignment(assignment1);
+            courier.AddAssignment(Order1.Id, Order1.Volume, Order1.Location);
 
             // Assert
-            Assert.Throws<Courier.CourierMaxVolumeExceededException>(() => courier.AddAssignment(assignment2));
+            Assert.Throws<Courier.CourierMaxVolumeExceededException>(() => courier.AddAssignment(Order2.Id, Order2.Volume, Order2.Location));
         }
 
         [Fact]
         public void ShouldThrowAssignmentCourierNotSameLocationExceptionIfLocationIsNotSame()
         {
             // Arrange
-            var location = new Location(1, 5);
+            var location = new Location(7, 7);
             var courier = new Courier("Иван Ивановмч", location);
-
-            var assignment1 = new Assignment(Order1);
+          
             
             // Act
-            courier.AddAssignment(assignment1);
+            courier.AddAssignment(Order1.Id, Order1.Volume, Order1.Location);
+
 
             // Assert
-            Assert.Throws<Assignment.AssignmentCourierNotSameLocationException>(() => courier.CompliteAssigment(assignment1, new Location(7,7)));
+            Assert.Throws<Assignment.AssignmentCourierNotSameLocationException>(() => courier.CompliteAssigment(Order1.Id));
         }
 
         [Fact]
@@ -101,12 +98,11 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             var newlocation = new Location(1, 6);
             var courier = new Courier("Иван Ивановмч", location);
 
-            var assignment = new Assignment(Order1);
             // Act
-            courier.AddAssignment(assignment);
+            courier.AddAssignment(Order1.Id, Order1.Volume, Order1.Location);
             courier.Location = newlocation;
             // Assert
-            Assert.Contains(assignment, courier.Assignments);
+            Assert.True(courier.ContainsOrderId(Order1.Id));
             Assert.Equal(newlocation, courier.Location);
         }
 
@@ -118,9 +114,6 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             var newlocation = new Location(7, 6);
             var courier = new Courier("Иван Ивановмч", location);
 
-            var assignment = new Assignment(Order1);
-            // Act
-            courier.AddAssignment(assignment);
             // Assert
             Assert.Throws<Courier.CourierInvalideLocationException>(() => courier.Location = newlocation);
         }

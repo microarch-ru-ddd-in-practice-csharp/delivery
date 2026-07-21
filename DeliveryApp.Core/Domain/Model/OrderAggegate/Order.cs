@@ -14,28 +14,9 @@ public class Order : Aggregate<Guid>
 {
     #region Свойства
 
-    private OrderStatus _orderStatus = OrderStatus.Created;
     public Location Location { get; init; }
 
-    public OrderStatus Status
-    { 
-        get => _orderStatus;
-        set
-        {
-            if (value is null) throw new ArgumentNullException(nameof(value), "Статус заказа не может быть пустым");
-            if (value == _orderStatus) return;
-            if (value == OrderStatus.Assigned && _orderStatus != OrderStatus.Created)
-            {
-                throw new OrderInvalidStatusException("Статус заказа может быть изменен на 'Назначенный' только из 'Созданного'", value);  
-            }
-            else if (value == OrderStatus.Completed && _orderStatus != OrderStatus.Assigned)
-            {
-                throw new OrderInvalidStatusException("Статус заказа может быть изменен на 'Завершенный' только из 'Назначенный'", value);
-            }
-            
-            _orderStatus = value;
-        }
-    }
+    public OrderStatus Status { get; private set; } = OrderStatus.Created;
     public Volume Volume { get; init; }
 
     #endregion  
@@ -52,7 +33,39 @@ public class Order : Aggregate<Guid>
 
     [ExcludeFromCodeCoverage]
     private Order()
-    { }
+    {
+    }
+
+    #endregion
+
+    #region functions
+
+    /// <summary>
+    /// Сменяет статус заказа на Назначен.
+    /// </summary>
+    public void Assign()
+    {
+        if (Status != OrderStatus.Created)
+        {
+            throw new OrderInvalidStatusException("Статус заказа может быть изменен на 'Назначенный' только из 'Созданного'", OrderStatus.Assigned);
+        }
+
+        Status = OrderStatus.Assigned;
+    }
+
+    /// <summary>
+    /// Сменяет статус заказа на Завершен.
+    /// </summary>
+    /// <exception cref="OrderInvalidStatusException"></exception>
+    public void Complete()
+    {
+        if (Status != OrderStatus.Assigned)
+        {
+            throw new OrderInvalidStatusException("Статус заказа может быть изменен на 'Завершенный' только из 'Назначенный'", OrderStatus.Completed);
+        }
+
+        Status = OrderStatus.Completed;
+    }
 
     #endregion
 

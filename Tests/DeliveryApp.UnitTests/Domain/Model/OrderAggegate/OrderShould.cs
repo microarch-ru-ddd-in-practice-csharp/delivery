@@ -57,7 +57,7 @@ namespace DeliveryApp.UnitTests.Domain.Model.OrderAggegate
             var volume = new Volume(10);
             var order = new Order(orderId, location, volume);
             // Act
-            order.Status = OrderStatus.Assigned;
+            order.Assign();
             // Assert
             Assert.Equal(OrderStatus.Assigned, order.Status);
         }
@@ -70,9 +70,9 @@ namespace DeliveryApp.UnitTests.Domain.Model.OrderAggegate
             var location = new Location(1, 5);
             var volume = new Volume(10);
             var order = new Order(orderId, location, volume);
-            
+
             // Act & Assert
-            Assert.Throws<Order.OrderInvalidStatusException>(() => order.Status = OrderStatus.Completed);
+            Assert.Throws<Order.OrderInvalidStatusException>(() => order.Complete());
         }
 
         
