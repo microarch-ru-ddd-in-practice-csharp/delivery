@@ -26,12 +26,12 @@ public class Courier : Aggregate<Guid>
     /// <summary>
     /// Максимальный объем заданий курьера
     /// </summary>
-    public Volume MaxVolume { get; init; } = new Volume(20);
+    public Volume MaxVolume { get; private set; } = new Volume(20);
 
     /// <summary>
     /// Имя курьера
     /// </summary>
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
     /// <summary>
     /// Истина если курьер может принять еще одно задание (открытых по обьёму), иначе ложь
     /// </summary>

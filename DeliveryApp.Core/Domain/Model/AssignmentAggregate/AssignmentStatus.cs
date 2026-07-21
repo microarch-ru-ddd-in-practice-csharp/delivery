@@ -20,7 +20,7 @@ public class AssignmentStatus : Entity<int>
     /// <summary>
     ///     Название статуса заказа
     /// </summary>
-    public string Name { get; init; }
+    public string Name { get; private set; }
 
     public static IEnumerable<AssignmentStatus> List() => new[] { Assigned, Completed };
 

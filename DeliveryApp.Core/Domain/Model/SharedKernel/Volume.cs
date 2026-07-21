@@ -6,7 +6,7 @@ public class Volume : ValueObject
 {
     #region Свойства
 
-    public int Capatity { get; init; } = 1;
+    public int Capatity { get; private set; } = 1;
 
     #endregion
 

@@ -13,17 +13,17 @@ public class Assignment : Entity<Guid>
     /// <summary>
     /// идентификатор заказа
     /// </summary>
-    public Guid OrderId { get; init; }
+    public Guid OrderId { get; private set; }
 
     /// <summary>
     /// Обьем заказа
     /// </summary>
-    public Volume Volume { get; init; }
+    public Volume Volume { get; private set; }
 
     /// <summary>
     /// Место доставки заказа
     /// </summary>
-    public Location Location { get; init; }
+    public Location Location { get; private set; }
 
     /// <summary>
     /// Статус заказа

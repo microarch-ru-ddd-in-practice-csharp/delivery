@@ -14,10 +14,10 @@ public class Order : Aggregate<Guid>
 {
     #region Свойства
 
-    public Location Location { get; init; }
+    public Location Location { get; private set; }
 
     public OrderStatus Status { get; private set; } = OrderStatus.Created;
-    public Volume Volume { get; init; }
+    public Volume Volume { get; private set; }
 
     #endregion  
 

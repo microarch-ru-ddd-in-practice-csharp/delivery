@@ -23,7 +23,7 @@ namespace DeliveryApp.Core.Domain.Model.OrderAggegate
         /// <summary>
         ///     Название статуса заказа
         /// </summary>
-        public string Name { get; init; } = "";
+        public string Name { get; private set; } = "";
 
         public override string ToString()
         {
