@@ -44,7 +44,7 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             var courier = new Courier("Иван Ивановмч", location);
             var newLocation = new Location(3, 5);
             // Act & Assert
-            Assert.Throws<Courier.CourierInvalideLocationException>(() => courier.Location = newLocation);
+            Assert.Throws<Courier.CourierInvalideLocationException>(() => courier.SetNewLocation(newLocation));
         }
 
         [Fact]
@@ -100,7 +100,7 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
 
             // Act
             courier.AddAssignment(Order1.Id, Order1.Volume, Order1.Location);
-            courier.Location = newlocation;
+            courier.SetNewLocation(newlocation);
             // Assert
             Assert.True(courier.ContainsOrderId(Order1.Id));
             Assert.Equal(newlocation, courier.Location);
@@ -115,7 +115,7 @@ namespace DeliveryApp.UnitTests.Domain.Model.CourierAggregate
             var courier = new Courier("Иван Ивановмч", location);
 
             // Assert
-            Assert.Throws<Courier.CourierInvalideLocationException>(() => courier.Location = newlocation);
+            Assert.Throws<Courier.CourierInvalideLocationException>(() => courier.SetNewLocation(newlocation));
         }
     }
 }

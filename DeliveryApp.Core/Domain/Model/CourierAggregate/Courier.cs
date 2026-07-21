@@ -12,7 +12,6 @@ public class Courier : Aggregate<Guid>
     #region Свойства
 
     private List<Assignment> _assignments = new List<Assignment>();
-    private Location _location;
 
     /// <summary>
     /// Список заданий курьера
@@ -22,21 +21,21 @@ public class Courier : Aggregate<Guid>
     /// <summary>
     /// Локация курьера
     /// </summary>
-    public Location Location 
-    { 
-        get => _location;
-        set
-        {
-            if (value == null) throw new ArgumentNullException(nameof(value)    , @"Локация курьера не может быть пустой");
-            // Проверка на допустимое расстояние между текущей локацией и новой локацией
-            if (_location != null && _location.Distance(value) > 1)
-            {
-                throw new CourierInvalideLocationException(_location, value);
-            }
+    public Location Location { get; private set; }
+    //{ 
+    //    get => _location;
+    //    set
+    //    {
+    //        if (value == null) throw new ArgumentNullException(nameof(value)    , @"Локация курьера не может быть пустой");
+    //        // Проверка на допустимое расстояние между текущей локацией и новой локацией
+    //        if (_location != null && _location.Distance(value) > 1)
+    //        {
+    //            throw new CourierInvalideLocationException(_location, value);
+    //        }
 
-            _location = value;
-        }
-    }
+    //        _location = value;
+    //    }
+    //}
 
     /// <summary>
     /// Максимальный объем заданий курьера
@@ -96,9 +95,20 @@ public class Courier : Aggregate<Guid>
         AddAssignment(order.Id, order.Volume, order.Location);
     }
 
-    public void MoveTo(Location newlocation)
+    /// <summary>
+    /// Заменяет локацию Курьера на новую.
+    /// </summary>
+    /// <param name="newlocation"></param>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="CourierInvalideLocationException"></exception>
+    public void SetNewLocation(Location newlocation)
     {
         if (newlocation is null) throw new ArgumentNullException(nameof(newlocation), "Локация не может быть пустой");
+        if (Location.Distance(newlocation) > 1)
+        {
+            throw new CourierInvalideLocationException(Location, newlocation);
+        }
+
         this.Location = newlocation;
     }
 
