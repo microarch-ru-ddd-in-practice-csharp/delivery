@@ -87,7 +87,7 @@ public class Courier : Aggregate<Guid>
     /// <param name="newlocation"></param>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="CourierInvalideLocationException"></exception>
-    public void SetNewLocation(Location newlocation)
+    public void Move(Location newlocation)
     {
         if (newlocation is null) throw new ArgumentNullException(nameof(newlocation), "Локация не может быть пустой");
         if (Location.Distance(newlocation) > 1)
