@@ -125,6 +125,11 @@ public class Courier : Aggregate<Guid>
         assignment.Complete(this.Location);
     }
 
+    public override string ToString()
+    {
+        return $"{Id} {Name}";
+    }
+
     #endregion
 
     #region Exception

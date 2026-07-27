@@ -47,8 +47,7 @@ public class Location : ValueObject
     /// <returns></returns>
     public int Distance (Location target)
     {
-        var res = Math.Abs(this.X - target.X) + Math.Abs(this.Y - target.Y);
-        return res;
+        return Math.Abs(this.X - target.X) + Math.Abs(this.Y - target.Y);
     }
 
     #endregion
