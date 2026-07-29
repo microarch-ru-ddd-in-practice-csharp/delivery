@@ -11,20 +11,24 @@ namespace DeliveryApp.Core.Domain.Services.OrderAssignment;
 
 public class OrderAssignmentService : IOrderAssignmentService
 {
-    public Courier AssignOrderToCourier(Order order, List<Courier> availableCouriers)
+    public (bool Successful, Courier Courier) AssignOrderToCourier(Order order, List<Courier> availableCouriers)
     { 
         if (order == null) throw new ArgumentNullException(nameof(order));
         if (order.Status != OrderStatus.Created) throw new NoOrderStatusCreatedException(order);
+        if (availableCouriers == null || !availableCouriers.Any())
+            throw new NoAvailibaleCourierException(availableCouriers);
+
         // создайм список доступных курьеров
         var canAssigmentCourierList = availableCouriers.Where(x => x.CanAddAssignment(order.Volume)).ToList();
-        if (!canAssigmentCourierList.Any())
-            throw new NoAvailibaleCourirsFromVolumeException(availableCouriers);
+        if (!canAssigmentCourierList.Any()) return (false, null);
         // выбираем ближайщего курьера к заказу по дистанции к заказу.
         var courier = canAssigmentCourierList.OrderBy(x => x.Location.Distance(order.Location)).First();
-        // Переводим заказ в согласованное состояние
+        // Присоединяем заказ курьеру
         courier.AddAssignment(order);
+        // Переводим заказ в согласованное состояние
+        order.Assign();
         // возвращяем курьера
-        return courier;
+        return (true, courier);
     }
 
     #region Exceptions
@@ -39,11 +43,21 @@ public class OrderAssignmentService : IOrderAssignmentService
         }
     }
 
-    public class NoAvailibaleCourirsFromVolumeException : Exception
+    public class NoAvailibaleCourierFromVolumeException : Exception
     {
         public List<Courier> Couriers { get; private init; }
 
-        public NoAvailibaleCourirsFromVolumeException(List<Courier> couriers) : base("Нет курьеров с допустимых объем заказов.")
+        public NoAvailibaleCourierFromVolumeException(List<Courier> couriers) : base("Нет курьеров с допустимых объем заказов.")
+        {
+            this.Couriers = couriers;
+        }
+    }
+
+    public class NoAvailibaleCourierException : Exception
+    {
+        public List<Courier> Couriers { get; private init; }
+
+        public NoAvailibaleCourierException(List<Courier> couriers) : base("Список курьеров пустой")
         {
             this.Couriers = couriers;
         }

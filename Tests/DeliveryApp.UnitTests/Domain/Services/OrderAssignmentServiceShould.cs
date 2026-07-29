@@ -43,8 +43,12 @@ public class OrderAssignmentServiceShould
         var courrier1 = new Courier("Иванов", new Location(5, 5));
         var couriers = new List<Courier>() { courrier1 };
 
+        //Act
+        var res = _service.AssignOrderToCourier(order, couriers);
+
         // Assert
-        Assert.Throws<OrderAssignmentService.NoAvailibaleCourirsFromVolumeException>(() => _service.AssignOrderToCourier(order, couriers));
+        Assert.False(res.Successful);
+
     }
 
     [Fact]
@@ -58,10 +62,11 @@ public class OrderAssignmentServiceShould
         var couriers = new List<Courier>() { courier1, courier2, courier3 };
 
         // Act
-        var courier = _service.AssignOrderToCourier (order, couriers);
+        var result = _service.AssignOrderToCourier (order, couriers);
 
         // Assert
-        Assert.Equal(courier, courier3);
+        Assert.True(result.Successful);
+        Assert.Equal(result.Courier, courier3);
     }
 
     [Fact]
@@ -77,9 +82,23 @@ public class OrderAssignmentServiceShould
         var couriers = new List<Courier>() { courier1, courier2, courier3, courier4 };
 
         // Act
-        var courier = _service.AssignOrderToCourier(order, couriers);
+        var result = _service.AssignOrderToCourier(order, couriers);
 
         // Assert
-        Assert.Equal(courier, courier3);
+        Assert.True(result.Successful);
+        Assert.Equal(result.Courier, courier3);
+        Assert.Equal(order.Status, OrderStatus.Assigned);
+    }
+
+    [Fact]
+    public void ShouldThrowNoAvailibaleCourirsIfCourierListEmüty()
+    {
+        // Arrange
+        var order = new Order(Guid.NewGuid(), new Location(2, 2), new Volume(15));
+        var couriers = new List<Courier>();
+
+        // Assert
+        Assert.Throws<OrderAssignmentService.NoAvailibaleCourierException>(() => _service.AssignOrderToCourier(order, couriers));
+        Assert.Throws<OrderAssignmentService.NoAvailibaleCourierException>(() => _service.AssignOrderToCourier(order, null));
     }
 }

@@ -8,5 +8,5 @@ namespace DeliveryApp.Core.Domain.Services.OrderAssignment;
 /// </summary>
 public interface IOrderAssignmentService
 {
-    Courier AssignOrderToCourier(Order order, List<Courier> availableCouriers);
+    (bool Successful, Courier Courier) AssignOrderToCourier(Order order, List<Courier> availableCouriers);
 }
