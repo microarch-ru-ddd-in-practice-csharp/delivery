@@ -1,5 +1,9 @@
+using Ddd;
 using DeliveryApp.Api;
 using DeliveryApp.Core.Domain.Services.OrderAssignment;
+using DeliveryApp.Core.Ports;
+using DeliveryApp.Infrastructure.Adapters.PostgeSQL;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +25,20 @@ builder.Services.AddSingleton<IOrderAssignmentService, OrderAssignmentService>()
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();
 var connectionString = builder.Configuration["CONNECTION_STRING"];
+
+// 6 модуль
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseNpgsql(
+        connectionString,
+        sql => sql.MigrationsAssembly("DeliveryApp.Infrastructure")
+    );
+    options.EnableSensitiveDataLogging();
+});
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICourierRepository, CourierRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 var app = builder.Build();
 

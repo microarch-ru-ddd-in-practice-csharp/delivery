@@ -1,8 +1,9 @@
 ﻿#nullable disable
 
 using CSharpFunctionalExtensions;
-using DeliveryApp.Core.Domain.Model.SharedKernel;
+using DeliveryApp.Core.Domain.Model.CounterAggegate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
+using DeliveryApp.Core.Domain.Model.SharedKernel;
 
 namespace DeliveryApp.Core.Domain.Model.AssignmentAggregate;
 
@@ -30,6 +31,10 @@ public class Assignment : Entity<Guid>
     /// </summary>
     public AssignmentStatus Status { get; private set; }
 
+    public Guid CourierId { get; private set; }
+
+    public Courier Courier { get; private set; } = null!;
+
 
     #endregion
 
@@ -51,6 +56,11 @@ public class Assignment : Entity<Guid>
     public void CreateId()
     {
         this.Id = Guid.NewGuid();
+    }
+
+    internal void SetCourierId (Guid courierId)
+    {
+        CourierId = courierId;
     }
 
     #endregion

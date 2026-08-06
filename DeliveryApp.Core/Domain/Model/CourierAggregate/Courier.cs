@@ -68,6 +68,7 @@ public class Courier : Aggregate<Guid>
         if (!CanAddAssignment(newAssignment.Volume)) throw new CourierMaxVolumeExceededException();
         newAssignment.CreateId();
         _assignments.Add(newAssignment);
+        newAssignment.SetCourierId (Id);
     }
 
     /// <summary>
