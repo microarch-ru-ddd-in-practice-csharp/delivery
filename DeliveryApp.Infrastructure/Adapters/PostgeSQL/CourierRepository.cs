@@ -25,7 +25,6 @@ public class CourierRepository : ICourierRepository
     {
         ArgumentNullException.ThrowIfNull(courier);
         _dbContext.Couriers.Update(courier);
-        await _dbContext.SaveChangesAsync();
     }
 
     
