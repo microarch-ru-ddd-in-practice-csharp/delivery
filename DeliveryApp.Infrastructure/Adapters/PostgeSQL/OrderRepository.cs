@@ -1,4 +1,5 @@
-﻿using DeliveryApp.Core.Domain.Model.OrderAggegate;
+﻿using DeliveryApp.Core.Application.UseCases.Queries.GetNotCompletedOrdersQuery;
+using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Ports;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,14 +35,23 @@ public class OrderRepository : IOrderRepository
     {
         return await _dbContext.Orders.FirstOrDefaultAsync(x => x.Id == orderId, cancellationToken);
     }
-
-    
+        
     public async Task UpdateAsync(Order order)
     {
         _dbContext.Orders.Update(order);
     }
 
-    
+    public async Task<List<GetNotCompletedOrdersQueryDto>> GetNotCompletedOrdersQueryDtoAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Orders
+            .Where(x => x.Status.Name != OrderStatus.Completed.Name)
+            .Select(o => new GetNotCompletedOrdersQueryDto
+            {
+                OrderId = o.Id,
+                Location = o.Location,
+            })
+            .ToListAsync(cancellationToken);
+    }
 
     #endregion
 }

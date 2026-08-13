@@ -4,6 +4,7 @@ using DeliveryApp.Core.Domain.Services.OrderAssignment;
 using DeliveryApp.Core.Ports;
 using DeliveryApp.Infrastructure.Adapters.PostgeSQL;
 using Microsoft.EntityFrameworkCore;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<IOrderAssignmentService, OrderAssignmentService>();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderCommand).Assembly));
 
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();

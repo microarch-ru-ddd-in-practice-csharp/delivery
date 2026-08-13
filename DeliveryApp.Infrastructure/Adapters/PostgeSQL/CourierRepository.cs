@@ -1,4 +1,5 @@
-﻿using DeliveryApp.Core.Domain.Model.CounterAggegate;
+﻿using DeliveryApp.Core.Application.UseCases.Queries.GetAllCouriers;
+using DeliveryApp.Core.Domain.Model.CounterAggegate;
 using DeliveryApp.Core.Ports;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,19 @@ public class CourierRepository : ICourierRepository
         return await _dbContext.Couriers
             .Include(x => x.Assignments)
             .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<GetAllCouriersQueryDto>> GetAllCouriersDtosAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Couriers
+            .Select(c => new GetAllCouriersQueryDto
+            {
+                CourierId = c.Id,
+                Name = c.Name,
+                Location = c.Location
+            })
+            .ToListAsync(cancellationToken);
+
     }
 
     #endregion

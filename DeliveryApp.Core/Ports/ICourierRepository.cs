@@ -1,7 +1,8 @@
-﻿using System;
+﻿using DeliveryApp.Core.Application.UseCases.Queries.GetAllCouriers;
+using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
 
 namespace DeliveryApp.Core.Ports;
 
@@ -33,4 +34,6 @@ public interface ICourierRepository
     /// </summary>
     /// <returns></returns>
     public Task<IEnumerable<Courier>> GetAllAsync(CancellationToken cancellationToken);
+
+    public Task<IEnumerable<GetAllCouriersQueryDto>> GetAllCouriersDtosAsync(CancellationToken cancellationToken);
 }

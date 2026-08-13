@@ -16,7 +16,7 @@ public class Courier : Aggregate<Guid>
     /// <summary>
     /// Список заданий курьера
     /// </summary>
-    public IReadOnlyCollection<Assignment> Assignments => _assignments.AsReadOnly();
+    public List<Assignment> Assignments => _assignments;
 
     /// <summary>
     /// Локация курьера

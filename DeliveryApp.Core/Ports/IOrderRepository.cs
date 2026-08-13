@@ -1,4 +1,5 @@
-﻿using DeliveryApp.Core.Domain.Model.OrderAggegate;
+﻿using DeliveryApp.Core.Application.UseCases.Queries.GetNotCompletedOrdersQuery;
+using DeliveryApp.Core.Domain.Model.OrderAggegate;
 
 namespace DeliveryApp.Core.Ports;
 
@@ -35,5 +36,7 @@ public interface IOrderRepository
     /// </summary>
     /// <returns></returns>
     public Task<IEnumerable<Order>> GetAssignedOrdersAsync(CancellationToken cancellationToken);
+
+    public Task<List<GetNotCompletedOrdersQueryDto>> GetNotCompletedOrdersQueryDtoAsync(CancellationToken cancellationToken); 
 
 }
