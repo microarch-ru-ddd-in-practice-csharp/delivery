@@ -1,11 +1,10 @@
 ﻿#nullable disable
 
 using Ddd;
-using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 
-namespace DeliveryApp.Core.Domain.Model.CounterAggegate;
+namespace DeliveryApp.Core.Domain.Model.CourierAggregate;
 
 public class Courier : Aggregate<Guid>
 {
@@ -64,7 +63,7 @@ public class Courier : Aggregate<Guid>
     /// <exception cref="CourierMaxVolumeExceededException"></exception>
     public void AddAssignment(Guid orderId, Volume volume, Location location)
     {
-        var newAssignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        var newAssignment = new Assignment(orderId, volume, location);
         if (!CanAddAssignment(newAssignment.Volume)) throw new CourierMaxVolumeExceededException();
         newAssignment.CreateId();
         _assignments.Add(newAssignment);

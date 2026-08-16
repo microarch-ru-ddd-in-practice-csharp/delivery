@@ -1,5 +1,4 @@
-﻿using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using System;

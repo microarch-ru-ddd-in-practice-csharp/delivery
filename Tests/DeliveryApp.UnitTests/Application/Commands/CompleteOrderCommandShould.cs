@@ -1,7 +1,6 @@
 ﻿using Ddd;
 using DeliveryApp.Core.Application.UseCases.Commands.CompleteOrderCommand;
-using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using DeliveryApp.Core.Ports;
@@ -26,10 +25,13 @@ public class CompleteOrderCommandShould
     {
 
         // Arrange
-        var courier = new Courier("Курьер 1", new Location (5, 5));
+        var courier = new Courier("Курьер 1", new Location (5, 4));
         var order = new Order(Guid.NewGuid(), new Location(5, 7), new Volume(10));
         courier.AddAssignment(order);
         order.Assign();
+
+        courier.Move(new Location(5, 5));
+        courier.Move(new Location(5, 6));
         _unitOfWorkMock.SaveChangesAsync().Returns(Task.FromResult(true));
         _orderRepositoryMock.GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(Task.FromResult(order));
         _courierRepositoryMock.GetByIdAsync(Arg.Any<Guid>(), Arg.Any<CancellationToken>()).Returns(Task.FromResult(courier));

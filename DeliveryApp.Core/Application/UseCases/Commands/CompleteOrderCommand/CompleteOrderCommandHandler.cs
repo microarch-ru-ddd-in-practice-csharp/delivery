@@ -29,14 +29,8 @@ public class CompleteOrderCommandHandler : IRequestHandler<CompleteOrderCommand,
         {
             return false;
         }
-        var assignment = courier.Assignments.FirstOrDefault(x => x.OrderId == request.OrderId);
-        if (assignment == null)
-        {
-            return false;
-        }
 
-        var location = new Location(assignment.Location.X, assignment.Location.Y);
-        assignment.Complete(location);
+        courier.CompliteAssigment(order.Id);
         order.Complete();
         await _courierRepository.UpdateAsync(courier);
         await _orderRepository.UpdateAsync(order);

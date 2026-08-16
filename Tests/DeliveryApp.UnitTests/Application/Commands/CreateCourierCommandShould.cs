@@ -1,6 +1,6 @@
 ﻿using Ddd;
 using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Ports;
 using NSubstitute;
 using System.Threading.Tasks;

@@ -1,9 +1,7 @@
-﻿using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Infrastructure.Adapters.PostgeSQL.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
-using Queues.Basket.Events;
 
 namespace DeliveryApp.Infrastructure.Adapters.PostgeSQL;
 

@@ -1,15 +1,13 @@
 ﻿using Ddd;
+using DeliveryApp.Core.Application.UseCases.Commands.MoveCourierCommand;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
+using DeliveryApp.Core.Domain.Model.SharedKernel;
 using DeliveryApp.Core.Ports;
 using NSubstitute;
 using System;
-using Xunit;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using DeliveryApp.Core.Application.UseCases.Commands.MoveCourierCommand;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
-using DeliveryApp.Core.Domain.Model.SharedKernel;
 using System.Threading;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace DeliveryApp.UnitTests.Application.Commands;
 

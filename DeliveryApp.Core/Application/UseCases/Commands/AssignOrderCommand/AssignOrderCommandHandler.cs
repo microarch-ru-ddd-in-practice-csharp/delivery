@@ -1,4 +1,5 @@
 ﻿using Ddd;
+using DeliveryApp.Core.Domain.Services.OrderAssignment;
 using DeliveryApp.Core.Ports;
 using MediatR;
 
@@ -8,10 +9,17 @@ public class AssignOrderCommandHandler : IRequestHandler<AssignOrderCommand, boo
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICourierRepository _courierRepository;
+
+    private readonly OrderAssignmentService _orderAssignmentService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AssignOrderCommandHandler(IOrderRepository orderRepository, ICourierRepository courierRepository, IUnitOfWork unitOfWork)
+    public AssignOrderCommandHandler(
+        OrderAssignmentService orderAssignmentService,
+        IOrderRepository orderRepository, 
+        ICourierRepository courierRepository, 
+        IUnitOfWork unitOfWork)
     {
+        _orderAssignmentService = orderAssignmentService;
         _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         _courierRepository = courierRepository ?? throw new ArgumentNullException(nameof(courierRepository));
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
@@ -21,13 +29,15 @@ public class AssignOrderCommandHandler : IRequestHandler<AssignOrderCommand, boo
     {
         var order = await _orderRepository.GetAnyCreatedOrderAsync(cancellationToken);
         var couriers = await _courierRepository.GetAllAsync(cancellationToken);
-        var courier = couriers.FirstOrDefault(c => c.CanAddAssignment(order.Volume));
-        if (courier == null)  return false;
-        courier.AddAssignment(order);
-        order.Assign();
-        await _courierRepository.UpdateAsync (courier);
-        await _orderRepository.UpdateAsync(order);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return true;
+        var result = _orderAssignmentService.AssignOrderToCourier(order, couriers.ToList());
+        if (result.Successful)
+        {
+            await _courierRepository.UpdateAsync(result.Courier);
+            await _orderRepository.UpdateAsync(order);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+
+        return false;
     }
 }

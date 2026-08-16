@@ -7,6 +7,7 @@ public class MoveCourierCommand : IRequest<bool>
 {
     public MoveCourierCommand(Guid courierId, Location location)
     {
+        if (courierId == Guid.Empty) throw new ArgumentException("Идентификатор Курьера не может быть пустым");
         CourierId = courierId;
         Location = location;
     }

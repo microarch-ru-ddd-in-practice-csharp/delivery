@@ -1,8 +1,8 @@
-﻿using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
+﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using System;
 using Xunit;
-using static DeliveryApp.Core.Domain.Model.AssignmentAggregate.Assignment;
+using static DeliveryApp.Core.Domain.Model.CourierAggregate.Assignment;
 
 namespace DeliveryApp.UnitTests.Domain.Model.AssignmentAggregate;
 
@@ -17,7 +17,7 @@ public class AssignmentShould
         var volume = new Volume(1);
         var location = new Location(1, 5);
         // Act
-        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        var assignment = new Assignment(orderId, volume, location);
         // Assert
         Assert.Equal(orderId, assignment.OrderId);
         Assert.Equal(location, assignment.Location);
@@ -32,7 +32,7 @@ public class AssignmentShould
         var volume = new Volume(1);
         Location location = null;
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new Assignment(orderId, volume, location, AssignmentStatus.Assigned));
+        Assert.Throws<ArgumentNullException>(() => new Assignment(orderId, volume, location));
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class AssignmentShould
         Volume volume = null;
         var location = new Location(1, 5);
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => new Assignment(orderId, volume, location, AssignmentStatus.Assigned));
+        Assert.Throws<ArgumentNullException>(() => new Assignment(orderId, volume, location));
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class AssignmentShould
         var status = AssignmentStatus.Assigned;
         var volume = new Volume(1);
         var location = new Location(1, 5);
-        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        var assignment = new Assignment(orderId, volume, location);
         // Act
         var exception = Record.Exception(() => assignment.Complete(location));
         // Assert
@@ -71,7 +71,7 @@ public class AssignmentShould
         var status = AssignmentStatus.Assigned;
         var volume = new Volume(1);
         var location = new Location(1, 5);
-        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        var assignment = new Assignment(orderId, volume, location);
         // Act && Assert
         
         Assert.Throws<AssignmentCourierNotSameLocationException>(() => assignment.Complete(new Location(5, 5)));
@@ -85,7 +85,7 @@ public class AssignmentShould
         var status = AssignmentStatus.Assigned;
         var volume = new Volume(1);
         var location = new Location(1, 5);
-        var assignment = new Assignment(orderId, volume, location, AssignmentStatus.Assigned);
+        var assignment = new Assignment(orderId, volume, location);
         // Act 
         assignment.Complete(new Location(1, 5));
         // Assert

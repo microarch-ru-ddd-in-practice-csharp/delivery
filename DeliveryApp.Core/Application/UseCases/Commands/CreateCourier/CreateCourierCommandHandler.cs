@@ -1,5 +1,5 @@
 ﻿using Ddd;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 using DeliveryApp.Core.Ports;
 using MediatR;

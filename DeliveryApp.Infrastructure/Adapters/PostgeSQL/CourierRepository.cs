@@ -1,5 +1,5 @@
 ﻿using DeliveryApp.Core.Application.UseCases.Queries.GetAllCouriers;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Ports;
 using Microsoft.EntityFrameworkCore;
 

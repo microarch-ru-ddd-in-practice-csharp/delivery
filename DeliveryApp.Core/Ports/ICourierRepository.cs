@@ -1,8 +1,5 @@
 ﻿using DeliveryApp.Core.Application.UseCases.Queries.GetAllCouriers;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 
 namespace DeliveryApp.Core.Ports;
 

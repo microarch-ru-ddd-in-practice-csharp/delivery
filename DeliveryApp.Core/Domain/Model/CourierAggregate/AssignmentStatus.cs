@@ -1,7 +1,7 @@
 ﻿#nullable disable
 using CSharpFunctionalExtensions;
 
-namespace DeliveryApp.Core.Domain.Model.AssignmentAggregate;
+namespace DeliveryApp.Core.Domain.Model.CourierAggregate;
 
 public class AssignmentStatus : Entity<int>
 {

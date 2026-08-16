@@ -1,11 +1,9 @@
 ﻿#nullable disable
 
 using CSharpFunctionalExtensions;
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
-using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Domain.Model.SharedKernel;
 
-namespace DeliveryApp.Core.Domain.Model.AssignmentAggregate;
+namespace DeliveryApp.Core.Domain.Model.CourierAggregate;
 
 public class Assignment : Entity<Guid>
 {
@@ -68,28 +66,19 @@ public class Assignment : Entity<Guid>
     #region Constructor
 
     private Assignment()
-    { }
+    {
+        Status = AssignmentStatus.Assigned;
+    }
 
-    public Assignment(Guid orderId, Volume volume, Location location, AssignmentStatus status) : this()
+    public Assignment(Guid orderId, Volume volume, Location location) : this()
     {
         if (orderId == Guid.Empty) throw new ArgumentException("Идентификатор заказа не может быть пустым", nameof(orderId));
-        if (status == AssignmentStatus.Completed) throw new ArgumentException("Статус не може быть ,завершенным,");
         this.Id = Guid.NewGuid();
         this.OrderId = orderId;
         this.Volume = volume ?? throw new ArgumentNullException(nameof(volume), "Обьем заказа не может быть пустым");
         this.Location = location ?? throw new ArgumentNullException(nameof(location), "Место доставки заказа не может быть пустым");
-        this.Status = status ?? throw new ArgumentNullException(nameof(status), "Статус заказа не может быть пустым");
     }
-
-    public Assignment(Order order) : this()
-    {
-        if (order == null) throw new ArgumentNullException(nameof(order), "Заказ не может быть пустым");
-        this.OrderId = order.Id;
-        this.Volume = order.Volume;
-        this.Location = order.Location;
-        this.Status = AssignmentStatus.Assigned;
-    }
-
+ 
     #endregion
 
     #region Классы исключений

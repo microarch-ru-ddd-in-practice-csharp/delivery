@@ -1,4 +1,4 @@
-﻿using DeliveryApp.Core.Domain.Model.AssignmentAggregate;
+﻿using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using Xunit;
 
 namespace DeliveryApp.UnitTests.Domain.Model.AssignmentAggregate;

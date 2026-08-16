@@ -20,7 +20,7 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, boo
         // Random Location
         var location = new Location(7, 8);
 
-        var order = new Order(command.OrderId, location, new Volume(command.Volume));
+        var order = new Order(command.OrderId, location, command.Volume);
         await _orderRepository.AddAsync(order);
         await _unitOfWork.SaveChangesAsync();
         return true;

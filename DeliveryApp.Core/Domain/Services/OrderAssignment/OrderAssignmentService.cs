@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-using DeliveryApp.Core.Domain.Model.CounterAggegate;
+using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 
 namespace DeliveryApp.Core.Domain.Services.OrderAssignment;

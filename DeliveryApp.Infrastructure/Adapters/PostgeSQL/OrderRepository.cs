@@ -45,11 +45,7 @@ public class OrderRepository : IOrderRepository
     {
         return await _dbContext.Orders
             .Where(x => x.Status.Name != OrderStatus.Completed.Name)
-            .Select(o => new GetNotCompletedOrdersQueryDto
-            {
-                OrderId = o.Id,
-                Location = o.Location,
-            })
+            .Select(o => new GetNotCompletedOrdersQueryDto (o.Id, o.Location.X, o.Location.Y))
             .ToListAsync(cancellationToken);
     }
 
