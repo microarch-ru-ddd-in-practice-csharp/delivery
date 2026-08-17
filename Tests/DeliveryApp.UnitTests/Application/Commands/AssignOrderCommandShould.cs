@@ -21,7 +21,7 @@ public class AssignOrderCommandShould
     private readonly IOrderRepository _orderRepositoryMock = Substitute.For<IOrderRepository>();
     private readonly ICourierRepository _courierRepositoryMock = Substitute.For<ICourierRepository>();
 
-    private readonly OrderAssignmentService _orderAssignmentService = new OrderAssignmentService();
+    private readonly IOrderAssignmentService _orderAssignmentService = new OrderAssignmentService();
 
     [Fact]
     public async Task ShouldAssignOrderCommand()

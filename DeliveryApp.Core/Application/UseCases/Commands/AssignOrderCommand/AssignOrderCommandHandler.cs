@@ -10,11 +10,11 @@ public class AssignOrderCommandHandler : IRequestHandler<AssignOrderCommand, boo
     private readonly IOrderRepository _orderRepository;
     private readonly ICourierRepository _courierRepository;
 
-    private readonly OrderAssignmentService _orderAssignmentService;
+    private readonly IOrderAssignmentService _orderAssignmentService;
     private readonly IUnitOfWork _unitOfWork;
 
     public AssignOrderCommandHandler(
-        OrderAssignmentService orderAssignmentService,
+        IOrderAssignmentService orderAssignmentService,
         IOrderRepository orderRepository, 
         ICourierRepository courierRepository, 
         IUnitOfWork unitOfWork)
