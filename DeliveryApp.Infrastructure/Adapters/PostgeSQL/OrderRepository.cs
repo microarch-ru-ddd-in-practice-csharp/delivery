@@ -41,11 +41,25 @@ public class OrderRepository : IOrderRepository
         _dbContext.Orders.Update(order);
     }
 
+    public async Task<IEnumerable<Order>> GetCreatedOrdersAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Orders
+            .Where(x => x.Status.Name == OrderStatus.Created.Name)
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<List<GetNotCompletedOrdersQueryDto>> GetNotCompletedOrdersQueryDtoAsync(CancellationToken cancellationToken)
     {
         return await _dbContext.Orders
-            .Where(x => x.Status.Name != OrderStatus.Completed.Name)
+            .Where(x => x.Status.Name != OrderStatus.Completed.Name)            
             .Select(o => new GetNotCompletedOrdersQueryDto (o.Id, o.Location.X, o.Location.Y))
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<IEnumerable<Order>> GetNotCompletedOrdersAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Orders
+            .Where(x => x.Status.Name != OrderStatus.Completed.Name)
             .ToListAsync(cancellationToken);
     }
 

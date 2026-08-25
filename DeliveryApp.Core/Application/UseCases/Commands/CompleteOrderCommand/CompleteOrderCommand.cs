@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MediatR;
-using Microsoft.IdentityModel.Tokens;
+﻿using MediatR;
 
 namespace DeliveryApp.Core.Application.UseCases.Commands.CompleteOrderCommand;
 

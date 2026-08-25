@@ -3,6 +3,7 @@ using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
 using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Ports;
 using NSubstitute;
+using System;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,7 +27,7 @@ public class CreateCourierCommandShould
         var result = await handler.Handle(command, default);
 
         // Assert
-        Assert.True(result);
+        Assert.True(result.Ok);
         await _courierRepositoryMock.Received(1).AddAsync(Arg.Any<Courier>());
         await _unitOfWorkMock.Received(1).SaveChangesAsync();
     }

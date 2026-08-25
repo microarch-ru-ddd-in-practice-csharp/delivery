@@ -2,7 +2,7 @@
 
 namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
 
-public class CreateCourierCommand : IRequest<bool>
+public class CreateCourierCommand : IRequest<CreateResponse>
 {
     public CreateCourierCommand (string name)
     { 

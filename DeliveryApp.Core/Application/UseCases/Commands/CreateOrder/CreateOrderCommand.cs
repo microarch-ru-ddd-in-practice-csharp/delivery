@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
 
-public class CreateOrderCommand : IRequest<bool>
+public class CreateOrderCommand : IRequest<CreateResponse>
 {
 
     public CreateOrderCommand(Guid orderId, string country, string city, string street, string house, string apartment, int volume)

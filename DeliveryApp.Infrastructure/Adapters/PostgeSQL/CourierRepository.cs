@@ -45,15 +45,26 @@ public class CourierRepository : ICourierRepository
 
     public async Task<IEnumerable<GetAllCouriersQueryDto>> GetAllCouriersDtosAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.Couriers
-            .Select(c => new GetAllCouriersQueryDto
-            {
-                CourierId = c.Id,
-                Name = c.Name,
-                Location = c.Location
-            })
-            .ToListAsync(cancellationToken);
-
+        IEnumerable<GetAllCouriersQueryDto> result = [];
+        try
+        {
+            result = await _dbContext.Couriers
+                .AsNoTracking()
+                .Select(c => new GetAllCouriersQueryDto
+                {
+                    CourierId = c.Id,
+                    Name = c.Name,
+                    Location = c.Location
+                })
+                .ToListAsync(cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            Console.WriteLine($"Error occurred while fetching couriers: {ex.Message}");
+            throw; // Переброс исключения, если необходимо
+        }
+        return result;
     }
 
     #endregion

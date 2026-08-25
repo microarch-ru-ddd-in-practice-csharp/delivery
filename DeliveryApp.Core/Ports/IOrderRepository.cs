@@ -36,7 +36,23 @@ public interface IOrderRepository
     /// </summary>
     /// <returns></returns>
     public Task<IEnumerable<Order>> GetAssignedOrdersAsync(CancellationToken cancellationToken);
-
+    /// <summary>
+    /// Получить все незавершенные заказы
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<IEnumerable<Order>> GetNotCompletedOrdersAsync (CancellationToken cancellationToken);
+    /// <summary>
+    /// Получить все созданные заказы
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public Task<IEnumerable<Order>> GetCreatedOrdersAsync(CancellationToken cancellationToken);
+    /// <summary>
+    /// Получить все незавершенные заказы в виде DTO
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public Task<List<GetNotCompletedOrdersQueryDto>> GetNotCompletedOrdersQueryDtoAsync(CancellationToken cancellationToken); 
 
 }

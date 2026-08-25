@@ -26,7 +26,7 @@ public class CreateOrderCommandShould
         // Act
         var result = await handler.Handle(command, default);
         // Assert
-        Assert.True(result);
+        Assert.True(result.Ok);
         await _orderRepositoryMock.Received(1).AddAsync(Arg.Any<Order>());
         await _unitOfWorkMock.Received(1).SaveChangesAsync();
     }

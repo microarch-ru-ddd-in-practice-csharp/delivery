@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
 
-public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand, bool>
+public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand, CreateResponse>
 {
 
     private readonly IUnitOfWork _unitOfWork;
@@ -17,12 +17,12 @@ public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand,
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         _courierRepository = courierRepository ?? throw new ArgumentNullException(nameof(courierRepository));
     }
-    public async Task<bool> Handle(CreateCourierCommand command, CancellationToken cancellationToken)
+    public async Task<CreateResponse> Handle(CreateCourierCommand command, CancellationToken cancellationToken)
     {
         var location = new Location(1,1);
         var courier = new Courier(command.Name, location);
         await _courierRepository.AddAsync(courier);
         await _unitOfWork.SaveChangesAsync();
-        return true;
+        return new CreateResponse(courier.Id);
     }
 }
