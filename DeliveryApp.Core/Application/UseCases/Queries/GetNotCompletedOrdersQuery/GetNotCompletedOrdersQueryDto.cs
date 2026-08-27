@@ -9,16 +9,14 @@ public class GetNotCompletedOrdersQueryDto
 
     public GetNotCompletedOrdersQueryDto(
         Guid orderId,
-        int locationx,
-        int locationy )
+        Location location )
     {
         OrderId = orderId;
-        LocationX = locationx;
-        LocationY = locationy;
+        Location = location;
     }
     public Guid OrderId { get; private init; }
     
-    public int LocationX { get; private init; }
+    public Location Location { get; private init; }
 
-    public int LocationY { get; private init; }
+
 }

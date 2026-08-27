@@ -1,4 +1,4 @@
-﻿using DeliveryApp.Core.Application.UseCases.Commands.AssignOrdersCommand;
+﻿using DeliveryApp.Core.Application.UseCases.Commands.AssignOrderCommand;
 using MediatR;
 using Quartz;
 
@@ -16,6 +16,6 @@ public class AssignOrdersJob : IJob
 
     public async Task Execute(IJobExecutionContext context)
     {
-        await _mediator.Send(new AssignOrdersCommand());
+         await _mediator.Send(new AssignOrderCommand ());
     }
 }

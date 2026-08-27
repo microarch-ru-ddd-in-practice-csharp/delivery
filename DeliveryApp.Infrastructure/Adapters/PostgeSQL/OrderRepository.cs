@@ -50,9 +50,9 @@ public class OrderRepository : IOrderRepository
 
     public async Task<List<GetNotCompletedOrdersQueryDto>> GetNotCompletedOrdersQueryDtoAsync(CancellationToken cancellationToken)
     {
-        return await _dbContext.Orders
+        return await _dbContext.Orders.AsNoTracking()
             .Where(x => x.Status.Name != OrderStatus.Completed.Name)            
-            .Select(o => new GetNotCompletedOrdersQueryDto (o.Id, o.Location.X, o.Location.Y))
+            .Select(o => new GetNotCompletedOrdersQueryDto (o.Id, o.Location))
             .ToListAsync(cancellationToken);
     }
 

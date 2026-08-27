@@ -20,7 +20,7 @@ public class CreateOrderController(IMediator mediator) : CreateOrderApiControlle
             if (response.Ok)
                 return Created(
                     $"/api/orders/{response.Id}", 
-                    new CreateCourierResponse() { CourierId = response.Id });
+                    new CreateOrderResponse() { OrderId = response.Id });
         
             return StatusCode(StatusCodes.Status409Conflict, new Error(StatusCodes.Status409Conflict, "Ошибка при создании курьера."));
         }

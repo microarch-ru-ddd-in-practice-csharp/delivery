@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using System.Collections.Generic;
 
 namespace DeliveryApp.Core.Application.UseCases.Queries.GetAllCouriers;
 
