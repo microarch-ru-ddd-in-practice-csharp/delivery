@@ -3,9 +3,10 @@ using Ddd;
 using DeliveryApp.Api;
 using DeliveryApp.Api.Adapters.BackgroundJobs;
 using DeliveryApp.Api.Adapters.Http.Contract.src.OpenApi.Mapping;
-using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateOrderCommand;
 using DeliveryApp.Core.Domain.Services.OrderAssignment;
 using DeliveryApp.Core.Ports;
+using DeliveryApp.Infrastructure.Adapters.Gprc.GeoService;
 using DeliveryApp.Infrastructure.Adapters.PostgeSQL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -53,7 +54,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 // Configuration
 builder.Services.ConfigureOptions<SettingsSetup>();
 var connectionString = builder.Configuration["CONNECTION_STRING"];
-
+var geo = builder.Configuration["GEO_SERVICE_GRPC_HOST"];
 // 6 модуль
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -67,6 +68,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICourierRepository, CourierRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IGeoClient, GeoClient>();
 
 builder.Services.AddQuartz(configure =>
 {

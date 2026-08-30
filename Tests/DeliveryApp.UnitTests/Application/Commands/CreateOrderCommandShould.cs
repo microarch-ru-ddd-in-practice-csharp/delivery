@@ -1,5 +1,5 @@
 ﻿using Ddd;
-using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateOrderCommand;
 using DeliveryApp.Core.Domain.Model.OrderAggegate;
 using DeliveryApp.Core.Ports;
 using NSubstitute;

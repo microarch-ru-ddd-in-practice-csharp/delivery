@@ -4,7 +4,7 @@ using DeliveryApp.Core.Domain.Model.SharedKernel;
 using DeliveryApp.Core.Ports;
 using MediatR;
 
-namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
+namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourierCommand;
 
 public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand, CreateResponse>
 {

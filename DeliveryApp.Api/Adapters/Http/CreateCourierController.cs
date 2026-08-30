@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DeliveryApp.Api.Adapters.Http.Contract.OpenApi.Controllers;
 using DeliveryApp.Api.Adapters.Http.Contract.OpenApi.Models;
-using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateCourierCommand;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

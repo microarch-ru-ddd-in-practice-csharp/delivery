@@ -1,7 +1,7 @@
 ﻿using DeliveryApp.Core.Domain.Model.SharedKernel;
 using MediatR;
 
-namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
+namespace DeliveryApp.Core.Application.UseCases.Commands.CreateOrderCommand;
 
 public class CreateOrderCommand : IRequest<CreateResponse>
 {

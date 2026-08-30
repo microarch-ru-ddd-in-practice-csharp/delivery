@@ -1,6 +1,6 @@
 ﻿using DeliveryApp.Api.Adapters.Http.Contract.OpenApi.Controllers;
 using DeliveryApp.Api.Adapters.Http.Contract.OpenApi.Models;
-using DeliveryApp.Core.Application.UseCases.Commands.CreateOrder;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateOrderCommand;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

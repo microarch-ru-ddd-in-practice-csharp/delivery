@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
+namespace DeliveryApp.Core.Application.UseCases.Commands.CreateCourierCommand;
 
 public class CreateCourierCommand : IRequest<CreateResponse>
 {

@@ -1,5 +1,5 @@
 ﻿using Ddd;
-using DeliveryApp.Core.Application.UseCases.Commands.CreateCourier;
+using DeliveryApp.Core.Application.UseCases.Commands.CreateCourierCommand;
 using DeliveryApp.Core.Domain.Model.CourierAggregate;
 using DeliveryApp.Core.Ports;
 using NSubstitute;

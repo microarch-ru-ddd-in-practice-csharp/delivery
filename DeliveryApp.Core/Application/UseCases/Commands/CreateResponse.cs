@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeliveryApp.Core.Application.UseCases.Commands;
+﻿namespace DeliveryApp.Core.Application.UseCases.Commands;
 
 public class CreateResponse
 {
