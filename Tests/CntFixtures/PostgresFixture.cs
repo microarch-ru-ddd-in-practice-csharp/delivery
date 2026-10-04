@@ -8,8 +8,8 @@ public sealed class PostgresFixture : IAsyncLifetime
     public PostgreSqlContainer Container { get; } =
         new PostgreSqlBuilder(image: "postgres:14.7")
             .WithDatabase("delivery")
-            .WithUsername("username")
-            .WithPassword("secret")
+            .WithUsername("postgres")
+            .WithPassword("admin")
             .Build();
 
     public string ConnectionString => Container.GetConnectionString();
